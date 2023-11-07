@@ -11,6 +11,7 @@ body {
   font-size: 26px;
   font-weight: bold;
   text-transform: uppercase;
+  margin: 10px;
 }
 
 nav {
@@ -19,14 +20,11 @@ nav {
 
 .jumbotron {
   color: #121212;
+  background-color: #f5f5f5;
 }
 
-.jumbotron a {
-  background-color: #f05454;
-  color: #f5f5f5;
-}
-
-.jumbotron a:hover {
-  background-color: #30475e;
-  color: #f5f5f5;
+form button {
+  display: block;
+  background-color: rgba(255, 255, 255, 0);
+  border: none !important;
 }
