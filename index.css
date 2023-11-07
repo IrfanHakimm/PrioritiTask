@@ -8,10 +8,8 @@ body {
   cursor: default;
   color: #30475e;
   font-family: Roboto;
-  font-size: 26px;
+  font-size: 200%;
   font-weight: bold;
-  text-transform: uppercase;
-  margin: 10px;
 }
 
 nav {
