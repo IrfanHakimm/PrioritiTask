@@ -31,8 +31,8 @@
     </nav>
 
     <div
-      class="container my-5 py-5"
-      style="text-align: center; text-justify: distribute"
+      class="container"
+      style="text-align: center; text-justify: distribute; margin-top: 10px;"
     >
       <div class="row">
         <div class="col-md-12">
@@ -88,21 +88,18 @@
                   <option value="Not urgent">Not Urgent</option>
                 </select>
               </div>
-              <div class="col-auto">
-                <button class="add-button my-2">
-                  <i class="bi-plus-circle-fill fa-lg"></i>
-                </button>
+              <div class="col-auto my-2">
+                <button type="button" class="btn"><i class="bi-plus-circle-fill"></i></button>
               </div>
           </form>
+          <button type="button" class="btn my-5">Generate Table</i></button>
         </div>
       </div>
     </div>
 
     <div class="container">
       <section class="pyscript">
-        Hello world! <br />
-        This is the current date and time, as computed by Python:
-        <py-script>
+        <!-- <py-script>
           from collections import deque
 
           graph = {
@@ -153,7 +150,7 @@
           else:
               print(f"No path from {start_city} to {target_city}")
           
-        </py-script>
+        </py-script> -->
       </section>
     </div>
   </body>

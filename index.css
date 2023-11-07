@@ -21,8 +21,22 @@ nav {
   background-color: #f5f5f5;
 }
 
-form button {
-  display: block;
-  background-color: rgba(255, 255, 255, 0);
-  border: none !important;
+form button.btn {
+  background-color: #f05454;
+}
+form button.btn:hover {
+  background-color: #30475e;
+}
+
+form button.btn i {
+  color: #f5f5f5;
+}
+
+button.btn {
+  background-color: #f05454;
+  color: #f5f5f5;
+}
+button.btn:hover{
+  background-color: #30475e;
+  color: #f5f5f5;
 }
