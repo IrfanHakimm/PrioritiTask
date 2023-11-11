@@ -1,28 +1,28 @@
-const express = require('express');
-const mysql = require('mysql');
-const { exec } = require('child_process');
+const express = require("express");
+const mysql = require("mysql");
+const { exec } = require("child_process");
 
 const app = express();
 const port = 3000;
 
 // MySQL Configuration
 const mysqlConfig = {
-    host: 'your_mysql_host',
-    user: 'your_mysql_user',
-    password: 'your_mysql_password',
-    database: 'your_mysql_database',
+  host: "your_mysql_host",
+  user: "your_mysql_user",
+  password: "your_mysql_password",
+  database: "your_mysql_database",
 };
 
 // Create MySQL connection
 const connection = mysql.createConnection(mysqlConfig);
 
 // Connect to MySQL
-connection.connect(err => {
-    if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
-    }
-    console.log('Connected to MySQL');
+connection.connect((err) => {
+  if (err) {
+    console.error("Error connecting to MySQL:", err);
+    return;
+  }
+  console.log("Connected to MySQL");
 });
 // Handle adding a task
 app.post("/addTask", express.json(), (req, res) => {
@@ -45,21 +45,20 @@ app.post("/addTask", express.json(), (req, res) => {
 });
 
 // Handle generating a graph
-app.post('/generateGraph', (req, res) => {
-    // Trigger the Python script using child_process
-    exec('python generate_graph.py', (error, stdout, stderr) => {
-        if (error) {
-            console.error('Error executing Python script:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-        const graphData = JSON.parse(stdout);
-        console.log('Graph generated successfully:', graphData);
-        res.json({ success: true, graphData });
-    });
+app.post("/generateGraph", (req, res) => {
+  // Trigger the Python script using child_process
+  exec("python generate_graph.py", (error, stdout, stderr) => {
+    if (error) {
+      console.error("Error executing Python script:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    const graphData = JSON.parse(stdout);
+    console.log("Graph generated successfully:", graphData);
+    res.json({ success: true, graphData });
+  });
 });
 
-// ... Your existing server code ...
-);
-
-// ... Your existing server code ...
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
