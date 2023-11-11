@@ -89,71 +89,70 @@
               </select>
             </div>
             <div class="col-md-1 my-2">
-              <button type="button" class="btn">
+              <button type="button" class="btn" onclick="addTask()">
                 <i class="bi-plus-circle-fill"></i>
               </button>
             </div>
           </form>
-          <button type="button" class="btn my-5">Generate Table</button>
+          <button type="button" class="btn my-5" onclick="generateGraph()">
+            Generate Table
+          </button>
         </div>
       </div>
     </div>
+    <script>
+      // Function to add a task to MySQL
+      function addTask() {
+        const taskName = document.getElementById("taskName").value;
+        const subject = document.getElementById("subject").value;
+        const deadline = document.getElementById("deadline").value;
+        const importance = document.getElementById("importance").value;
+        const urgency = document.getElementById("urgency").value;
 
-    <div class="container">
-      <section class="pyscript">
-        <!-- <py-script>
-          from collections import deque
+        // Send data to the server using Fetch API
+        fetch("/addTask", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            taskName,
+            subject,
+            deadline,
+            importance,
+            urgency,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Task added successfully:", data);
+            // You may want to update the UI or show a success message
+          })
+          .catch((error) => {
+            console.error("Error adding task:", error);
+            // Handle error, e.g., show an error message to the user
+          });
+      }
 
-          graph = {
-              "Magetan": [("Madiun"), ("Ngawi"), ("Ponorogo")],
-              "Madiun": [("Magetan"), ("Nganjuk"), ("Ngawi"), ("Ponorogo")],
-              "Ngawi": [("Magetan"), ("Madiun"), ("Bojonegoro")],
-              "Ponorogo": [("Madiun"), ("Magetan")],
-              "Nganjuk": [("Madiun"), ("Jombang"), ("Bojonegoro")],
-              "Bojonegoro": [("Nganjuk"), ("Ngawi"), ("Jombang"), ("Lamongan")],
-              "Jombang": [("Nganjuk"), ("Bojonegoro"), ("Surabaya")],
-              "Lamongan": [("Gresik"), ("Bojonegoro")],
-              "Gresik": [("Surabaya"), ("Lamongan")],
-              "Surabaya": [("Gresik"), ("Jombang")],
-          }
-          
-          
-          def bfs_shortest_path(graph, start, target):
-              visited = set()
-              queue = deque()
-              queue.append([start])
-          
-              while queue:
-                  path = queue.popleft()  # Mengeluarkan index 0 di list queue
-                  node = path[-1]  # Mengakses list terakhir dari path
-          
-                  if node == target:
-                      return path
-          
-                  if node not in visited:
-                      for neighbor in graph[node]:
-                          new_path = list(path)
-                          new_path.append(neighbor)
-                          queue.append(new_path)
-          
-                      visited.add(node)
-          
-              return None
-          
-          
-          start_city = "Magetan"
-          target_city = "Surabaya"
-          shortest_path = bfs_shortest_path(graph, start_city, target_city)
-          
-          if shortest_path:
-              print(
-                  f"Shortest path from {start_city} to {target_city}: {' -> '.join(shortest_path)}"
-              )
-          else:
-              print(f"No path from {start_city} to {target_city}")
-          
-        </py-script> -->
-      </section>
-    </div>
+      function generateGraph() {
+        // Send a request to the server to trigger the Python script
+        fetch("/generateGraph", {
+          method: "POST",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Graph generated successfully:", data);
+            // Update the UI with the graph data (this is just a placeholder)
+            alert(
+              "Graph generated successfully!\nData: " +
+                JSON.stringify(data.graphData)
+            );
+          })
+          .catch((error) => {
+            console.error("Error generating graph:", error);
+            // Handle error, e.g., show an error message to the user
+          });
+      }
+    </script>
   </body>
 </html>
