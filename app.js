@@ -1,6 +1,6 @@
-const express = require("express");
-const mysql = require("mysql");
-const { exec } = require("child_process");
+import express, { json } from "express";
+import { createConnection } from "mysql";
+import { exec } from "child_process";
 
 const app = express();
 const port = 3000;
@@ -14,7 +14,7 @@ const mysqlConfig = {
 };
 
 // Create MySQL connection
-const connection = mysql.createConnection(mysqlConfig);
+const connection = createConnection(mysqlConfig);
 
 // Connect to MySQL
 connection.connect((err) => {
@@ -25,7 +25,7 @@ connection.connect((err) => {
   console.log("Connected to MySQL");
 });
 // Handle adding a task
-app.post("/addTask", express.json(), (req, res) => {
+app.post("/addTask", json(), (req, res) => {
   const { taskName, subject, deadline, importance, urgency } = req.body;
 
   // Insert data into MySQL
