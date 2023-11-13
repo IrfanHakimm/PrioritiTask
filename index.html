@@ -133,26 +133,6 @@
             // Handle error, e.g., show an error message to the user
           });
       }
-
-      function generateGraph() {
-        // Send a request to the server to trigger the Python script
-        fetch("/generateGraph", {
-          method: "POST",
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Graph generated successfully:", data);
-            // Update the UI with the graph data (this is just a placeholder)
-            alert(
-              "Graph generated successfully!\nData: " +
-                JSON.stringify(data.graphData)
-            );
-          })
-          .catch((error) => {
-            console.error("Error generating graph:", error);
-            // Handle error, e.g., show an error message to the user
-          });
-      }
     </script>
   </body>
 </html>
