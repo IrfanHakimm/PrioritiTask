@@ -7,7 +7,6 @@ app.use(BodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-// MySQL Configuration
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -15,7 +14,6 @@ const db = mysql.createConnection({
   database: "kka",
 });
 
-// Connect to MySQL
 db.connect((err) => {
   if (err) {
     console.error("Error connecting to MySQL:", err);
