@@ -1,40 +1,65 @@
 import mysql.connector
 from datetime import datetime
+from tabulate import tabulate
 
-def generateTable():
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="kka"
+# Connect to the database
+db = mysql.connector.connect(host="localhost", user="root", password="", database="kka")
+
+# Add 'taskPriority' column to the 'tasks' table if it doesn't exist
+cursor = db.cursor()
+
+
+# Function to calculate cost based on A* algorithm
+def calculate_cost(task):
+    current_date = datetime.now().date()
+    heuristic = 0
+    if task[3] == "Importance":
+        heuristic += 2
+    if task[4] == "Urgent":
+        heuristic += 1
+    else:
+        heuristic += 3
+    cost = (task[2] - current_date).days + heuristic
+    return cost
+
+# Retrieve data from the database
+cursor.execute("SELECT * FROM tasks")
+tasks = cursor.fetchall()
+
+# Add 'taskPriority' to each task
+for index, task in enumerate(tasks):
+    cursor.execute(
+        "UPDATE tasks SET taskPriority = %s WHERE taskName = %s", (index + 1, task[0])
     )
 
-    list_tasks = {}
+# Calculate and store costs for each task
+tasks_with_cost = []
+for task in tasks:
+    cost = calculate_cost(task)
+    tasks_with_cost.append((task, cost))
 
-    temp = db.cursor()
-    temp.execute("SELECT * FROM tasks")
+# Sort tasks based on cost
+tasks_with_cost.sort(key=lambda x: x[1])
 
-    for index, row in enumerate(temp):
-        task_info = [
-            row[0],  # taskName
-            row[1],  # subject
-            None,    # dl (to be calculated later)
-            row[3],  # importance
-            row[4]   # urgency
-        ]
+# Display prioritized tasks using tabulate
+table_data = []
+for index, (task, cost) in enumerate(tasks_with_cost):
+    deadline_diff = (task[2] - datetime.now().date()).days
+    if deadline_diff >= 0:
+        table_data.append([index + 1, task[0], task[1], deadline_diff])
 
-        deadline = row[2]
-        curr_date = datetime.now().date()
-        days_until_deadline = (deadline - curr_date).days
-        task_info[2] = days_until_deadline  # set the dl value
+# Define headers for the tabulated data
+headers = ["Priority", "Task Name", "Subject", "Days Left"]
 
-        list_tasks[index] = task_info
+# Print the tabulated data
+print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
-    temp.close()
+# Drop columns for tasks with passed deadlines
+cursor.execute("DELETE FROM tasks WHERE deadline < CURDATE()")
 
-    return list_tasks
+# Commit the changes to the database
+db.commit()
 
-list_tasks = generateTable()
-
-for key, value in list_tasks.items():
-    print(f"Task {key}: {value}")
+# Close the cursor and database connection
+cursor.close()
+db.close()
