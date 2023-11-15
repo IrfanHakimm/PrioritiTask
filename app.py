@@ -15,18 +15,18 @@ def generateTable():
     temp.execute("SELECT * FROM tasks")
 
     for index, row in enumerate(temp):
-        task_info = {
-            "taskName": row[0],
-            "subject": row[1],
-            "dl": None,
-            "importance": row[3],
-            "urgency": row[4]
-        }
+        task_info = [
+            row[0],  # taskName
+            row[1],  # subject
+            None,    # dl (to be calculated later)
+            row[3],  # importance
+            row[4]   # urgency
+        ]
 
         deadline = row[2]
         curr_date = datetime.now().date()
         days_until_deadline = (deadline - curr_date).days
-        task_info["dl"] = days_until_deadline
+        task_info[2] = days_until_deadline  # set the dl value
 
         list_tasks[index] = task_info
 
