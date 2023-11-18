@@ -27,7 +27,14 @@
 
       .navbar-brand {
         cursor: default;
-        color: #30475e;
+        color: #121212;
+        font-family: Roboto;
+        font-size: 200%;
+        font-weight: bold;
+      }
+      .navbar-brand:hover {
+        cursor: default;
+        color: #121212;
         font-family: Roboto;
         font-size: 200%;
         font-weight: bold;
@@ -46,7 +53,7 @@
         background-color: #f05454;
       }
       form button.btn:hover {
-        background-color: #30475e;
+        background-color: #121212;
       }
 
       form button.btn i {
@@ -58,8 +65,30 @@
         color: #f5f5f5;
       }
       button.btn:hover {
-        background-color: #30475e;
+        background-color: #121212;
         color: #f5f5f5;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid;
+      }
+
+      th,
+      td {
+        border: 1px solid #121212;
+        padding: 5px;
+      }
+
+      th {
+        background-color: #f05454;
+        color: #f5f5f5;
+        font-weight: bold;
+      }
+
+      td {
+        text-align: center;
       }
     </style>
   </head>
@@ -141,7 +170,7 @@
             <button type="submit" class="btn my-5">Generate Table</button>
           </form>
         </div>
-        <table>
+        <table class="mb-5">
           <thead>
             <tr>
               <th>Priority</th>
