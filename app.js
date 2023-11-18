@@ -1,9 +1,10 @@
 const express = require("express");
-const BodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const mysql = require("mysql");
+const { spawn } = require("child_process");
 const app = express();
 
-app.use(BodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -22,18 +23,45 @@ db.connect((err) => {
   console.log("Connected to MySQL");
 
   app.get("/", (req, res) => {
-    res.render("index");
+    try {
+      const tasks = require("./tasks.json");
+      res.render("index", { tasks });
+    } catch (error) {
+      console.error("Error loading local data:", error);
+      res.status(500).send("Internal Server Error");
+    }
   });
 
   app.post("/addTask", (req, res) => {
     const insertTask = `INSERT INTO tasks (taskName, subject, deadline, importance, urgency) VALUES ('${req.body.taskName}', '${req.body.subject}', '${req.body.deadline}', '${req.body.importance}', '${req.body.urgency}');`;
+
     db.query(insertTask, (err, result) => {
       if (err) {
         console.error("Error executing query:", err);
         res.status(500).send("Internal Server Error");
         return;
       }
+
       console.log("Task Inserted successfully");
+      res.redirect("/");
+    });
+  });
+
+  app.get("/generateTable", (req, res) => {
+    // Call Python script when the button is pressed
+    const pythonProcess = spawn("python", ["app.py"]);
+
+    pythonProcess.stdout.on("data", (data) => {
+      console.log(`Python script output: ${data}`);
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+      console.error(`Error in Python script: ${data}`);
+    });
+
+    pythonProcess.on("close", (code) => {
+      console.log(`Python script process exited with code ${code}`);
+      // Redirect or send a response to the client as needed
       res.redirect("/");
     });
   });

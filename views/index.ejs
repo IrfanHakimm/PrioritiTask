@@ -138,11 +138,29 @@
             </div>
           </form>
           <form action="/generateTable" method="get">
-            <button type="submit" class="btn my-5" onclick="generateTable()">
-              Generate Table
-            </button>
+            <button type="submit" class="btn my-5">Generate Table</button>
           </form>
         </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Task Name</th>
+              <th>Subject</th>
+              <th>Days Left</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% tasks.forEach(function(task) { %>
+            <tr>
+              <td><%= task.priority %></td>
+              <td><%= task.task_name %></td>
+              <td><%= task.subject %></td>
+              <td><%= task.days_left %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
       </div>
     </div>
   </body>

@@ -1,13 +1,11 @@
 import mysql.connector
 from datetime import datetime
-from tabulate import tabulate
-
+import json
 # Connect to the database
 db = mysql.connector.connect(host="localhost", user="root", password="", database="kka")
 
 # Add 'taskPriority' column to the 'tasks' table if it doesn't exist
 cursor = db.cursor()
-
 
 # Function to calculate cost based on A* algorithm
 def calculate_cost(task):
@@ -36,26 +34,30 @@ for index, task in enumerate(tasks):
 tasks_with_cost = []
 for task in tasks:
     cost = calculate_cost(task)
-    tasks_with_cost.append((task, cost))
+    tasks_with_cost.append({"task": task, "cost": cost})
 
 # Sort tasks based on cost
-tasks_with_cost.sort(key=lambda x: x[1])
+tasks_with_cost.sort(key=lambda x: x["cost"])
 
-# Display prioritized tasks using tabulate
-table_data = []
-for index, (task, cost) in enumerate(tasks_with_cost):
-    deadline_diff = (task[2] - datetime.now().date()).days
+# Filter tasks with non-passed deadlines
+filtered_tasks = []
+for item in tasks_with_cost:
+    deadline_diff = (item["task"][2] - datetime.now().date()).days
     if deadline_diff >= 0:
-        table_data.append([index + 1, task[0], task[1], deadline_diff])
+        filtered_tasks.append({
+            "priority": item["task"][5],
+            "task_name": item["task"][0],
+            "subject": item["task"][1],
+            "days_left": deadline_diff
+        })
 
-# Define headers for the tabulated data
-headers = ["Priority", "Task Name", "Subject", "Days Left"]
 
-# Print the tabulated data
-print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
+# Print the JSON data
+with open("tasks.json", "w") as json_file:
+    json.dump(filtered_tasks, json_file, indent=2)
 
 # Drop columns for tasks with passed deadlines
-cursor.execute("DELETE FROM tasks WHERE deadline < CURDATE()")
+cursor.execute("DELETE FROM tasks WHERE deadline <= CURDATE()")
 
 # Commit the changes to the database
 db.commit()
