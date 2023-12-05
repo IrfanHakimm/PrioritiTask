@@ -1,32 +1,32 @@
 [
   {
     "priority": 1,
-    "task_name": "Pameran seni",
-    "subject": "Seni",
-    "days_left": 5
-  },
-  {
-    "priority": 3,
-    "task_name": "Insert Artikel ke DB",
-    "subject": "PWEB",
-    "days_left": 5
-  },
-  {
-    "priority": 5,
-    "task_name": "Creative Ideas",
-    "subject": "Ditmawa",
-    "days_left": 5
+    "task_name": "Tugas 5",
+    "subject": "dsa",
+    "days_left": 1
   },
   {
     "priority": 2,
-    "task_name": "Projek ETS",
-    "subject": "kka",
-    "days_left": 9
+    "task_name": "Kiw",
+    "subject": "Matdis",
+    "days_left": 8
+  },
+  {
+    "priority": 3,
+    "task_name": "Tetew",
+    "subject": "PJOK",
+    "days_left": 10
   },
   {
     "priority": 4,
-    "task_name": "Project ETS",
+    "task_name": "mem",
+    "subject": "KKA",
+    "days_left": 22
+  },
+  {
+    "priority": 5,
+    "task_name": "kasih warna",
     "subject": "PBO",
-    "days_left": 23
+    "days_left": 21
   }
 ]
