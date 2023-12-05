@@ -3,30 +3,40 @@
     "priority": 1,
     "task_name": "Tugas 5",
     "subject": "dsa",
+    "importance": "Importance",
+    "urgency": "Urgent",
     "days_left": 1
   },
   {
     "priority": 2,
     "task_name": "Kiw",
     "subject": "Matdis",
+    "importance": "Not importance",
+    "urgency": "Urgent",
     "days_left": 8
   },
   {
     "priority": 3,
     "task_name": "Tetew",
     "subject": "PJOK",
+    "importance": "Importance",
+    "urgency": "Urgent",
     "days_left": 10
   },
   {
     "priority": 4,
     "task_name": "mem",
     "subject": "KKA",
+    "importance": "Importance",
+    "urgency": "Urgent",
     "days_left": 22
   },
   {
     "priority": 5,
     "task_name": "kasih warna",
     "subject": "PBO",
+    "importance": "Not importance",
+    "urgency": "Not urgent",
     "days_left": 21
   }
 ]

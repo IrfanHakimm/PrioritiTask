@@ -60,6 +60,8 @@ for item in tasks_with_cost:
                 "priority": item["task"][5],
                 "task_name": item["task"][0],
                 "subject": item["task"][1],
+                "importance": item["task"][3],
+                "urgency": item["task"][4],
                 "days_left": deadline_diff,
             }
         )
