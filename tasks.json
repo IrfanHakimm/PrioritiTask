@@ -1,32 +1,34 @@
 [
   {
     "priority": 1,
-    "task_name": "Pameran seni",
-    "subject": "Seni",
-    "days_left": 5
-  },
-  {
-    "priority": 3,
-    "task_name": "Insert Artikel ke DB",
-    "subject": "PWEB",
-    "days_left": 5
-  },
-  {
-    "priority": 5,
-    "task_name": "Creative Ideas",
-    "subject": "Ditmawa",
-    "days_left": 5
+    "task_name": "EAS Matdis",
+    "subject": "Matdis",
+    "importance": "Importance",
+    "urgency": "Urgent",
+    "days_left": 0
   },
   {
     "priority": 2,
-    "task_name": "Projek ETS",
-    "subject": "kka",
-    "days_left": 9
+    "task_name": "EAS Jarkom",
+    "subject": "Jarkom",
+    "importance": "Importance",
+    "urgency": "Urgent",
+    "days_left": 0
+  },
+  {
+    "priority": 3,
+    "task_name": "Remed Kuis 2",
+    "subject": "Alin",
+    "importance": "Importance",
+    "urgency": "Not urgent",
+    "days_left": 1
   },
   {
     "priority": 4,
-    "task_name": "Project ETS",
-    "subject": "PBO",
-    "days_left": 23
+    "task_name": "Seminar Enterpreuner X IPOT",
+    "subject": "KKA",
+    "importance": "Importance",
+    "urgency": "Urgent",
+    "days_left": 21
   }
 ]
