@@ -1,65 +1,79 @@
 import mysql.connector
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
-# Connect to the database
+
+# Connect Ke Database
 db = mysql.connector.connect(host="localhost", user="root", password="", database="kka")
 
-# Add 'taskPriority' column to the 'tasks' table if it doesn't exist
 cursor = db.cursor()
 
-# Function to calculate cost based on A* algorithm
+
+# menghitung Cost dengan A*
 def calculate_cost(task):
     current_date = datetime.now().date()
     heuristic = 0
+
     if task[3] == "Importance":
-        heuristic += 2
+        heuristic += 1
+    elif task[3] == "Not importance":
+        heuristic += 3
+
     if task[4] == "Urgent":
         heuristic += 1
-    else:
+    elif task[4] == "Not urgent":
         heuristic += 3
-    cost = (task[2] - current_date).days + heuristic
+
+    deadline_diff = (task[2] - current_date).days
+    heuristic += deadline_diff
+
+    cost = heuristic
     return cost
 
-# Retrieve data from the database
+
+# Select Data dari DB
 cursor.execute("SELECT * FROM tasks")
 tasks = cursor.fetchall()
 
-# Add 'taskPriority' to each task
-for index, task in enumerate(tasks):
-    cursor.execute(
-        "UPDATE tasks SET taskPriority = %s WHERE taskName = %s", (index + 1, task[0])
-    )
-
-# Calculate and store costs for each task
+# Menghitung Cost dari table tasks
 tasks_with_cost = []
 for task in tasks:
     cost = calculate_cost(task)
     tasks_with_cost.append({"task": task, "cost": cost})
 
-# Sort tasks based on cost
+# Sorting table tasks
 tasks_with_cost.sort(key=lambda x: x["cost"])
 
-# Filter tasks with non-passed deadlines
+# Update Table Tasks
+for index, task in enumerate(tasks_with_cost):
+    cursor.execute(
+        "UPDATE tasks SET taskPriority = %s WHERE taskName = %s",
+        (index + 1, task["task"][0]),
+    )
+
+# Filter tugas yang deadline nya tidak lewat
 filtered_tasks = []
 for item in tasks_with_cost:
     deadline_diff = (item["task"][2] - datetime.now().date()).days
     if deadline_diff >= 0:
-        filtered_tasks.append({
-            "priority": item["task"][5],
-            "task_name": item["task"][0],
-            "subject": item["task"][1],
-            "days_left": deadline_diff
-        })
+        filtered_tasks.append(
+            {
+                "priority": item["task"][5],
+                "task_name": item["task"][0],
+                "subject": item["task"][1],
+                "importance": item["task"][3],
+                "urgency": item["task"][4],
+                "days_left": deadline_diff,
+            }
+        )
 
-
-# Print the JSON data
+# Print data dari JSON
 with open("tasks.json", "w") as json_file:
     json.dump(filtered_tasks, json_file, indent=2)
 
-# Drop columns for tasks with passed deadlines
+# Exception menghapus tugas yang deadline nya lewat
 cursor.execute("DELETE FROM tasks WHERE deadline <= CURDATE()")
 
-# Commit the changes to the database
+# Commit ke DB
 db.commit()
 
 # Close the cursor and database connection

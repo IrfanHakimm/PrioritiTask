@@ -69,25 +69,40 @@
         color: #f5f5f5;
       }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      .warna-merah {
+        background-color: rgb(240, 84, 84, 0.5) !important;
       }
 
-      th,
-      td {
-        border: 0.5px solid #121212;
-        padding: 5px;
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 3px 10px 0 rgb(240, 84, 84, 0.3);
       }
 
       th {
         background-color: #f05454;
-        color: #f5f5f5;
-        font-weight: bold;
+        color: #f5f6f9;
+        text-align: center;
+        height: 45px;
       }
 
       td {
+        border-top: 1.5px solid #000000;
+        height: 65px;
+        padding-right: 7px;
+        padding-left: 7px;
         text-align: center;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: medium;
+      }
+
+      .table-hover > tbody > tr:hover > td {
+        background-color: rgb(67, 97, 238, 0.3);
       }
     </style>
   </head>
@@ -169,12 +184,14 @@
             <button type="submit" class="btn my-5">Generate Table</button>
           </form>
         </div>
-        <table class="mb-5">
+        <table class="table-hover mb-5" id="tabel">
           <thead>
             <tr>
               <th>Priority</th>
               <th>Task Name</th>
               <th>Subject</th>
+              <th>Importance</th>
+              <th>Urgency</th>
               <th>Days Left</th>
             </tr>
           </thead>
@@ -184,11 +201,28 @@
               <td><%= task.priority %></td>
               <td><%= task.task_name %></td>
               <td><%= task.subject %></td>
+              <td><%= task.importance %></td>
+              <td><%= task.urgency %></td>
               <td><%= task.days_left %></td>
             </tr>
             <% }); %>
           </tbody>
         </table>
+        <script>
+          // Dapatkan semua baris dalam tabel
+          var barisTabel = document.querySelectorAll("#tabel tbody tr"); // Ubah untuk hanya mengambil baris di dalam tbody
+
+          // Loop melalui setiap baris
+          barisTabel.forEach(function (baris) {
+            var taskDL = baris.querySelector("td:nth-child(6)"); // Kolom 'DL'
+            var nilaiDL = parseInt(taskDL.textContent);
+
+            if (nilaiDL === 1) {
+              // Jika nilai DL adalah 1, tambahkan kelas 'warna-merah' ke baris tersebut
+              baris.classList.add("warna-merah");
+            }
+          });
+        </script>
       </div>
     </div>
   </body>

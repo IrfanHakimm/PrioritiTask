@@ -48,7 +48,7 @@ db.connect((err) => {
   });
 
   app.get("/generateTable", (req, res) => {
-
+    // Call Python script when the button is pressed
     const pythonProcess = spawn("python", ["app.py"]);
 
     pythonProcess.stdout.on("data", (data) => {
@@ -61,6 +61,7 @@ db.connect((err) => {
 
     pythonProcess.on("close", (code) => {
       console.log(`Python script process exited with code ${code}`);
+      // Redirect or send a response to the client as needed
       res.redirect("/");
     });
   });
