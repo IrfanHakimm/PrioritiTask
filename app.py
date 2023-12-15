@@ -66,7 +66,7 @@ for item in tasks_with_cost:
             }
         )
 
-# Print data dari JSON
+# Print data ke JSON
 with open("tasks.json", "w") as json_file:
     json.dump(filtered_tasks, json_file, indent=2)
 
@@ -76,6 +76,6 @@ cursor.execute("DELETE FROM tasks WHERE deadline <= CURDATE()")
 # Commit ke DB
 db.commit()
 
-# Close the cursor and database connection
+# Close the cursor dan database connection
 cursor.close()
 db.close()

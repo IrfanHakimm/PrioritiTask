@@ -1,22 +1,6 @@
 [
   {
     "priority": 1,
-    "task_name": "EAS Matdis",
-    "subject": "Matdis",
-    "importance": "Importance",
-    "urgency": "Urgent",
-    "days_left": 0
-  },
-  {
-    "priority": 2,
-    "task_name": "EAS Jarkom",
-    "subject": "Jarkom",
-    "importance": "Importance",
-    "urgency": "Urgent",
-    "days_left": 0
-  },
-  {
-    "priority": 3,
     "task_name": "Remed Kuis 2",
     "subject": "Alin",
     "importance": "Importance",
@@ -24,7 +8,7 @@
     "days_left": 1
   },
   {
-    "priority": 4,
+    "priority": 2,
     "task_name": "Seminar Enterpreuner X IPOT",
     "subject": "KKA",
     "importance": "Importance",

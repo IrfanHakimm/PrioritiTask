@@ -8,6 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+// Connect ke MySQL
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -15,6 +16,7 @@ const db = mysql.createConnection({
   database: "kka",
 });
 
+// Check if connected
 db.connect((err) => {
   if (err) {
     console.error("Error connecting to MySQL:", err);
@@ -22,6 +24,7 @@ db.connect((err) => {
   }
   console.log("Connected to MySQL");
 
+  // Local data connection
   app.get("/", (req, res) => {
     try {
       const tasks = require("./tasks.json");
@@ -32,6 +35,7 @@ db.connect((err) => {
     }
   });
 
+  // post request buat add task dari user
   app.post("/addTask", (req, res) => {
     const insertTask = `INSERT INTO tasks (taskName, subject, deadline, importance, urgency) VALUES ('${req.body.taskName}', '${req.body.subject}', '${req.body.deadline}', '${req.body.importance}', '${req.body.urgency}');`;
 
@@ -47,6 +51,7 @@ db.connect((err) => {
     });
   });
 
+  // get request buat generate table
   app.get("/generateTable", (req, res) => {
     // Call Python script when the button is pressed
     const pythonProcess = spawn("python", ["app.py"]);
@@ -67,6 +72,7 @@ db.connect((err) => {
   });
 });
 
+// jika running akan memunculkan localhost server
 app.listen(8000, () => {
   console.log(`Server is running on http://localhost:${8000}`);
 });
